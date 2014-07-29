@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="unlock_style">
+        <item>看1个词解锁(懒人模式)</item>
+        <item>看3个词解锁(学生模式)</item>
+        <item>看5个词解锁(学霸模式)</item>
+        <item>看10个词解锁(学神模式)</item>
+    </string-array>
+
+</resources>

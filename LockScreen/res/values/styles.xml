@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+
+    <!-- 自定义checkbox的样式 -->
+    <style name="custom_checkbox" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:background">@drawable/checkbox</item>
+        <item name="android:button">@drawable/checkbox</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <!-- 自定义侧边栏文字样式 -->
+    <style name="sf_text">
+        <item name="android:paddingLeft">30dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/sf_text_color</item>
+    </style>
+
+    <style name="st_divider">
+        <item name="android:background">@drawable/sf_divider</item>
+        <item name="android:contentDescription">@string/app_name</item>
+    </style>
+
+</resources>
