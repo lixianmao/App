@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">LockScreen</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="today_unlock">今日解锁</string>
+    <string name="keep_review">坚持复习</string>
+    <string name="today_new">今日生词</string>
+    <string name="already_master">已掌握</string>
+    <string name="add">添加</string>
+    <string name="raw_word">生词本</string>
+    <string name="word">词</string>
+    <string name="plan">计划</string>
+    <string name="study_plan">学习计划</string>
+    <string name="unlock_style">解锁方式</string>
+    <string name="review_remind">复习提醒</string>
+    <string name="lock_screen">锁屏</string>
+    <string name="lock_wallpaper">锁屏壁纸</string>
+    <string name="single_word">词条</string>
+    <string name="lock_home">锁定Home</string>
+    <string name="word_update">词条更新</string>
+    <string name="others">其他</string>
+    <string name="turn_on">开启锁屏</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_guide">GuideActivity</string>
+    <string name="remind_time">提醒时间(24)</string>
+    <string name="title_activity_launcher">LauncherActivity</string>
+    <string name="title_activity_sliding">SlidingActivity</string>
+    <string name="l2_lock">L2锁屏</string>
+    <string name="review_mode">复习模式</string>
+    <string name="application_info">软件详情</string>
+    <string name="more_setting">更多设置</string>
+    <string name="title_activity_store">StoreActivity</string>
+    <string name="new_list">新建列表</string>
+    <string name="finish">完成</string>
+    <string name="edit">编辑</string>
+    <string name="delete">删除</string>
+    <string name="add_word">添加词条</string>
+    <string name="edit_body">body</string>
+    <string name="edit_mark">mark</string>
+    <string name="edit_mean">mean</string>
+    <string name="cancel">取消</string>
+    <string name="title_activity_down">DownActivity</string>
+
+</resources>
