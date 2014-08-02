@@ -77,7 +77,7 @@ public class EditActivity extends Activity implements View.OnTouchListener, View
                     if (isFirst)
                         tipHelper.removeTip();
 
-                    RemarkPopupWindow popupWindow = new RemarkPopupWindow(this);
+                    RemarkPopupWindow popupWindow = new RemarkPopupWindow(this, (ViewGroup)findViewById(R.id.edit_parent));
                     popupWindow.showAtLocation(findViewById(R.id.edit_parent), Gravity.CENTER_HORIZONTAL, 0, 150);
                     isEditAble = false;
                     break;

@@ -7,17 +7,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 
 /**
  * Created by dalian on 8/1/14.
  */
-public class RemarkPopupWindow extends PopupWindow implements View.OnClickListener{
+public class RemarkPopupWindow extends PopupWindow implements View.OnClickListener {
 
     private View popupView;
     private ImageView addVoiceView, addTextView;
+    private Context context;
+    private ViewGroup layout;
 
-    public RemarkPopupWindow(Context context) {
+    public RemarkPopupWindow(Context context, ViewGroup layout) {
         super(context);
+        this.context = context;
+        this.layout = layout;
 
         LayoutInflater inflater = LayoutInflater.from(context);
         popupView = inflater.inflate(R.layout.popup_window_remark, null);
@@ -37,11 +42,17 @@ public class RemarkPopupWindow extends PopupWindow implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
+        dismiss();
         switch (v.getId()) {
             case R.id.popup_add_voice:
 
                 break;
             case R.id.popup_add_text:
+                TextHelper text = new TextHelper(context);
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT);
+                params.setMargins(200, 200, 200, 200);
+                layout.addView(text, params);
                 break;
             default:
                 break;
@@ -51,7 +62,7 @@ public class RemarkPopupWindow extends PopupWindow implements View.OnClickListen
     private View.OnTouchListener touchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            if(event.getY()>popupView.getBottom() || event.getY() < popupView.getTop()
+            if (event.getY() > popupView.getBottom() || event.getY() < popupView.getTop()
                     || event.getX() < popupView.getLeft() || event.getX() > popupView.getRight())
                 dismiss();
             return true;
