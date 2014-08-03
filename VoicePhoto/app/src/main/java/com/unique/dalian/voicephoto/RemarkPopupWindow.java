@@ -1,11 +1,13 @@
 package com.unique.dalian.voicephoto;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
@@ -18,11 +20,14 @@ public class RemarkPopupWindow extends PopupWindow implements View.OnClickListen
     private ImageView addVoiceView, addTextView;
     private Context context;
     private ViewGroup layout;
+    private int x, y;
 
-    public RemarkPopupWindow(Context context, ViewGroup layout) {
+    public RemarkPopupWindow(Context context, ViewGroup layout, int x, int y) {
         super(context);
         this.context = context;
         this.layout = layout;
+        this.x = x;
+        this.y = y;
 
         LayoutInflater inflater = LayoutInflater.from(context);
         popupView = inflater.inflate(R.layout.popup_window_remark, null);
@@ -37,7 +42,6 @@ public class RemarkPopupWindow extends PopupWindow implements View.OnClickListen
         setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         setFocusable(true);
-        popupView.setOnTouchListener(touchListener);
     }
 
     @Override
@@ -45,27 +49,21 @@ public class RemarkPopupWindow extends PopupWindow implements View.OnClickListen
         dismiss();
         switch (v.getId()) {
             case R.id.popup_add_voice:
-
+                RecordHelper popupWindow = new RecordHelper(context);
+                popupWindow.showAtLocation(layout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 300);
                 break;
             case R.id.popup_add_text:
-                TextHelper text = new TextHelper(context);
+                MyEditText text = new MyEditText(context);
+                text.setBackgroundResource(R.drawable.bg_edittext);
+                text.setText("hello_world");
+
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
                         RelativeLayout.LayoutParams.WRAP_CONTENT);
-                params.setMargins(200, 200, 200, 200);
+                params.setMargins(x, y, 0, 0);
                 layout.addView(text, params);
                 break;
             default:
                 break;
         }
     }
-
-    private View.OnTouchListener touchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            if (event.getY() > popupView.getBottom() || event.getY() < popupView.getTop()
-                    || event.getX() < popupView.getLeft() || event.getX() > popupView.getRight())
-                dismiss();
-            return true;
-        }
-    };
 }

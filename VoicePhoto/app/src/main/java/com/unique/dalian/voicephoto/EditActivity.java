@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -13,6 +14,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 
 public class EditActivity extends Activity implements View.OnTouchListener, View.OnClickListener {
@@ -72,14 +75,16 @@ public class EditActivity extends Activity implements View.OnTouchListener, View
                 case MotionEvent.ACTION_MOVE:
                     break;
                 case MotionEvent.ACTION_UP:
-                    float x = event.getX();
-                    float y = event.getY();
+                    int x = (int) event.getX();
+                    int y = (int) event.getY();
+
                     if (isFirst)
                         tipHelper.removeTip();
 
-                    RemarkPopupWindow popupWindow = new RemarkPopupWindow(this, (ViewGroup)findViewById(R.id.edit_parent));
+                    RelativeLayout layout = (RelativeLayout) findViewById(R.id.edit_parent);
+                    RemarkPopupWindow popupWindow = new RemarkPopupWindow(this, layout, x, y);
                     popupWindow.showAtLocation(findViewById(R.id.edit_parent), Gravity.CENTER_HORIZONTAL, 0, 150);
-                    isEditAble = false;
+                    //isEditAble = false;
                     break;
                 default:
                     break;
@@ -106,6 +111,10 @@ public class EditActivity extends Activity implements View.OnTouchListener, View
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        bitmap.recycle();
+        if (bitmap != null) {
+            bitmap.recycle();
+            bitmap = null;
+        }
+
     }
 }

@@ -27,7 +27,7 @@ public class PhotoPopupWindow extends PopupWindow {
         this.activity = activity;
 
         LayoutInflater inflater = LayoutInflater.from(context);
-        popupView = (View) inflater.inflate(R.layout.popup_window_photo, null);
+        popupView = inflater.inflate(R.layout.popup_window_photo, null);
 
         fromAlbumView = (ImageView) popupView.findViewById(R.id.popup_from_album);
         fromCameraView = (ImageView) popupView.findViewById(R.id.popup_from_camera);
@@ -41,18 +41,6 @@ public class PhotoPopupWindow extends PopupWindow {
         setFocusable(true);
         ColorDrawable drawable = new ColorDrawable(0x80000000);
         setBackgroundDrawable(drawable);
-        popupView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int x = (int) event.getX();
-                int y = (int) event.getY();
-                if(y < popupView.getTop() || x < popupView.getLeft() || x > popupView.getRight())
-                    dismiss();
-                return true;
-            }
-        });
-
-
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
