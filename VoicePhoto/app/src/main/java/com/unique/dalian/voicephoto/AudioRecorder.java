@@ -1,11 +1,14 @@
 package com.unique.dalian.voicephoto;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
@@ -33,42 +36,43 @@ public class AudioRecorder {
 
     public AudioRecorder(Context context) {
         this.context = context;
-
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "VoicePhoto/audio");
-            if (!dir.exists())
-                dir.mkdir();
-        } else
-            Toast.makeText(context, "sdCard is invalid", Toast.LENGTH_SHORT).show();
     }
 
     private void init() {
-        if (null == dir)
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            dir = new File(Environment.getExternalStorageDirectory(), "VoicePhoto/audio");
+            if (!dir.exists())
+                dir.mkdirs();
+        } else {
+            Toast.makeText(context, "sdCard is invalid", Toast.LENGTH_SHORT).show();
             return;
+        }
 
         recorder = new MediaRecorder();
         try {
             recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            recorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_NB);
             recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
             File tmpFile = new File(dir, new Date().getTime() + "_" + segment + ".amr");
-            try {
-                if (!tmpFile.exists()) {
+            if (!tmpFile.exists()) {
+                try {
                     tmpFile.createNewFile();
-                    fileList.add(tmpFile);
-                    segment++;
-                    recorder.setOutputFile(tmpFile.getAbsolutePath());
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+
+            fileList.add(tmpFile);
+            segment++;
+            recorder.setOutputFile(tmpFile.getAbsolutePath());
 
         } catch (IllegalStateException e) {
             e.printStackTrace();
         }
 
     }
+
 
     public void start() {
         init();
@@ -86,23 +90,10 @@ public class AudioRecorder {
         } catch (IllegalStateException e) {
             e.printStackTrace();
         }
+        Toast.makeText(context, "recoriding ...", Toast.LENGTH_SHORT).show();
     }
 
     public void pause() {
-        if (null == recorder)
-            return;
-
-        try {
-            recorder.stop();
-            recorder.release();
-            recorder = null;
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public void stop() {
         if (null != recorder) {
             try {
                 recorder.stop();
@@ -112,6 +103,11 @@ public class AudioRecorder {
                 e.printStackTrace();
             }
         }
+
+    }
+
+    public void save() {
+        pause();
 
         finalFile = new File(dir, new Date().getTime() + ".amr");
         if (!finalFile.exists()) {
@@ -130,7 +126,6 @@ public class AudioRecorder {
             e.printStackTrace();
         }
 
-
         for (int i = 0; i < fileList.size(); i++) {
             File tmpFile = fileList.get(i);
             FileInputStream fis = null;
@@ -138,6 +133,7 @@ public class AudioRecorder {
                 fis = new FileInputStream(tmpFile);
                 byte[] tmpBytes = new byte[fis.available()];
                 int length = tmpBytes.length;
+
                 if (i == 0) {
                     while (fis.read(tmpBytes) != -1)
                         fos.write(tmpBytes, 0, length);
@@ -145,6 +141,7 @@ public class AudioRecorder {
                     while (fis.read(tmpBytes) != -1)
                         fos.write(tmpBytes, 6, length - 6);
                 }
+
                 fos.flush();
                 fis.close();
             } catch (FileNotFoundException e) {
@@ -167,20 +164,21 @@ public class AudioRecorder {
             }
         }
 
-        for (File file : fileList) {
+        for (File file : fileList)
             file.delete();
-            fileList.clear();
-            segment = 1;
-        }
+        fileList.clear();
+        segment = 1;
+        Toast.makeText(context, "saved in" + finalFile.getAbsolutePath(), Toast.LENGTH_SHORT).show();
     }
 
     public void delete() {
+        pause();
+
         if (fileList != null && fileList.size() != 0) {
-            for (File file : fileList) {
+            for (File file : fileList)
                 file.delete();
-                fileList.clear();
-                segment = 1;
-            }
+            fileList.clear();
+            segment = 1;
         }
     }
 
