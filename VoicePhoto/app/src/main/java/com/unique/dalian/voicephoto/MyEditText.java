@@ -17,7 +17,6 @@ import org.w3c.dom.Text;
  */
 public class MyEditText extends EditText {
 
-
     public MyEditText(Context context) {
         super(context);
 

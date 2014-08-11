@@ -1,15 +1,19 @@
 package com.unique.dalian.voicephoto;
 
 import android.content.Context;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+
+import com.unique.dalian.voicephoto.MyEditText;
+import helper.PointPos;
+import com.unique.dalian.voicephoto.R;
+import com.unique.dalian.voicephoto.RecordHelper;
+
+import helper.Declare;
 
 /**
  * Created by dalian on 8/1/14.
@@ -21,13 +25,24 @@ public class RemarkPopupWindow extends PopupWindow implements View.OnClickListen
     private Context context;
     private ViewGroup layout;
     private int x, y;
+    private float xPos, yPos;
 
-    public RemarkPopupWindow(Context context, ViewGroup layout, int x, int y) {
+    /**
+     * @param context
+     * @param layout  the parent view that contains this PopupWindow
+     * @param x       x coordinate to the layout
+     * @param y       y coordinate to the layout
+     * @param xPos    x coordinate to the image, in percent
+     * @param yPos    y coordinate to the image, in percent
+     */
+    public RemarkPopupWindow(Context context, ViewGroup layout, int x, int y, float xPos, float yPos) {
         super(context);
         this.context = context;
         this.layout = layout;
         this.x = x;
         this.y = y;
+        this.xPos = xPos;
+        this.yPos = yPos;
 
         LayoutInflater inflater = LayoutInflater.from(context);
         popupView = inflater.inflate(R.layout.popup_window_remark, null);
@@ -49,8 +64,12 @@ public class RemarkPopupWindow extends PopupWindow implements View.OnClickListen
         dismiss();
         switch (v.getId()) {
             case R.id.popup_add_voice:
-                RecordHelper popupWindow = new RecordHelper(context);
-                popupWindow.showAtLocation(layout, Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 300);
+                RecordHelper recordHelper = new RecordHelper(context, layout, x, y, xPos, yPos);
+                RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        400);
+                param.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                param.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                layout.addView(recordHelper, param);
                 break;
             case R.id.popup_add_text:
                 MyEditText text = new MyEditText(context);
@@ -61,6 +80,10 @@ public class RemarkPopupWindow extends PopupWindow implements View.OnClickListen
                         RelativeLayout.LayoutParams.WRAP_CONTENT);
                 params.setMargins(x, y, 0, 0);
                 layout.addView(text, params);
+
+                Declare.type = Declare.TYPE_TEXT;
+                Declare.textList.add(text);
+                Declare.posList.add(new PointPos(xPos, yPos));
                 break;
             default:
                 break;

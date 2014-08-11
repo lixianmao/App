@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.os.Environment;
 import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,53 +11,58 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.File;
-import java.util.Date;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
+import helper.PointPos;
+
+import com.unique.dalian.voicephoto.PlayHelper;
+import com.unique.dalian.voicephoto.R;
+
+import helper.RecordEngine;
+import helper.Declare;
 
 /**
  * Created by dalian on 8/3/14.
  */
-public class RecordHelper extends PopupWindow {
+public class RecordHelper extends RelativeLayout {
 
     private Context context;
-    private View popupView;
+    private ViewGroup layout;
     private TextView timeView;
     private ImageButton doImgButton;
     private Button deleteButton, saveButton;
-    private AudioRecorder recorder;
+    private RecordEngine recorder;
     private TimeThread timeThread;
 
     public boolean isRecording;
     public int timeInSec = 0;
 
-    public RecordHelper(Context context) {
+    private int x, y;
+    private float xPos, yPos;
+
+    public RecordHelper(Context context, ViewGroup layout, int x, int y, float xPos, float yPos) {
         super(context);
         this.context = context;
+        this.layout = layout;
+        this.x = x;
+        this.y = y;
+        this.xPos = xPos;
+        this.yPos = yPos;
 
-        LayoutInflater inflater = LayoutInflater.from(context);
-        popupView = inflater.inflate(R.layout.layout_record, null);
-        timeView = (TextView) popupView.findViewById(R.id.record_time);
-        doImgButton = (ImageButton) popupView.findViewById(R.id.record_do);
-        deleteButton = (Button) popupView.findViewById(R.id.record_delete);
-        saveButton = (Button) popupView.findViewById(R.id.record_save);
+        LayoutInflater.from(context).inflate(R.layout.layout_record, this);
+        this.setBackgroundColor(0x88000000);
+        timeView = (TextView) findViewById(R.id.record_time);
+        doImgButton = (ImageButton) findViewById(R.id.record_do);
+        deleteButton = (Button) findViewById(R.id.record_delete);
+        saveButton = (Button) findViewById(R.id.record_save);
 
         doImgButton.setOnClickListener(clickListener);
         saveButton.setOnClickListener(clickListener);
         deleteButton.setOnClickListener(clickListener);
         timeView.setText("00:00");
-        this.setContentView(popupView);
-        this.setFocusable(true);
-        this.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-        this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        recorder = new AudioRecorder(context);
+        recorder = new RecordEngine(context);
         timeThread = new TimeThread();
         new Thread(timeThread).start();
     }
@@ -81,10 +85,20 @@ public class RecordHelper extends PopupWindow {
                     break;
                 case R.id.record_save:
                     isRecording = false;
-                    doImgButton.setBackgroundColor(0xff0000);
+                    doImgButton.setBackgroundColor(Color.RED);
                     recorder.save();
                     dismiss();
-                    stopThread();
+
+                    Declare.type = Declare.TYPE_VOICE;
+                    Declare.posList.add(new PointPos(xPos, yPos));
+                    String voicePath = recorder.getPath();
+                    Declare.voicePath = voicePath;
+
+                    PlayHelper playHelper = new PlayHelper(context, voicePath);
+                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                            RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    params.setMargins(x, y, 0, 0);
+                    layout.addView(playHelper, params);
                     break;
                 case R.id.record_delete:
                     isRecording = false;
@@ -96,7 +110,6 @@ public class RecordHelper extends PopupWindow {
                             recorder.delete();
                             dialog.dismiss();
                             dismiss();
-                            stopThread();
                         }
                     });
                     builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -118,7 +131,6 @@ public class RecordHelper extends PopupWindow {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what == 1) {
-                Log.e("handler", "receive");
                 int min = timeInSec / 60;
                 int sec = timeInSec % 60;
                 String minute = min < 10 ? "0" + min : min + "";
@@ -158,5 +170,10 @@ public class RecordHelper extends PopupWindow {
             timeThread.stopThread();
         if (handler != null)
             handler.removeCallbacks(timeThread);
+    }
+
+    private void dismiss() {
+        stopThread();
+        layout.removeView(this);
     }
 }

@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import helper.Declare;
+
 
 public class HomeActivity extends Activity implements View.OnClickListener {
 
@@ -35,6 +37,8 @@ public class HomeActivity extends Activity implements View.OnClickListener {
                 popupWindow.showAtLocation(findViewById(R.id.home_parent), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 60);
                 break;
             case R.id.home_iv_saved:
+                Intent intent = new Intent(this, SeeActivity.class);
+                startActivity(intent);
                 break;
             default:
                 break;
@@ -44,7 +48,7 @@ public class HomeActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == PhotoPopupWindow.POPUP_REQUEST && data != null) {
+        if (resultCode == RESULT_OK && requestCode == Declare.POPUP_REQUEST && data != null) {
             Uri photoUri = data.getData();
             if (null == photoUri) {
                 Toast.makeText(this, "access photo failed", Toast.LENGTH_SHORT).show();
@@ -52,7 +56,7 @@ public class HomeActivity extends Activity implements View.OnClickListener {
                 Intent intent = new Intent(this, EditActivity.class);
                 intent.setData(photoUri);
                 startActivity(intent);
-                if(Build.VERSION.SDK_INT > 5)       //activity skip animation
+                if (Build.VERSION.SDK_INT > 5)       //activity skip animation
                     overridePendingTransition(R.anim.enter, R.anim.exit);
             }
         }
