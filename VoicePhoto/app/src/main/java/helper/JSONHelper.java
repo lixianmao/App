@@ -2,6 +2,7 @@ package helper;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -94,10 +95,11 @@ public class JSONHelper {
 
     public void deleteObject(JSONArray array, int position) {
         JSONArray newArray = new JSONArray();
-        for (int i = 0; i < array.length() && i != position; i++) {
-            try{
-                newArray.put(array.get(i));
-            } catch(JSONException e) {
+        for (int i = 0; i < array.length(); i++) {
+            try {
+                if (i != position)
+                    newArray.put(array.get(i));
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }

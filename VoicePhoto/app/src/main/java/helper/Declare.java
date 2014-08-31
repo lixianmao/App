@@ -25,4 +25,7 @@ public class Declare {
     public static final String Y = "y";
     public static final String CONTENT = "content";
     public static final String TEXT = "text";
+
+    public static final String INTENT_PATH = "path";
+    public static final String INTENT_POSITION="position";
 }

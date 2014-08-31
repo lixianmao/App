@@ -30,6 +30,7 @@ public class ShowActivity extends ActionBarActivity implements View.OnClickListe
     private JSONArray array;
     private JSONObject object;
     private int position;
+    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +47,21 @@ public class ShowActivity extends ActionBarActivity implements View.OnClickListe
 
     private void showPhoto() {
         Intent intent = getIntent();
-        String path = intent.getStringExtra("path");
-        position = intent.getIntExtra("position", 0);
+        String path = intent.getStringExtra(Declare.INTENT_PATH);
+        position = intent.getIntExtra(Declare.INTENT_POSITION, 0);
 
         if (!TextUtils.isEmpty(path)) {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
             BitmapFactory.decodeFile(path, options);
-            options.inSampleSize = options.outWidth / 720;
+
             options.inJustDecodeBounds = false;
-            Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+            options.inSampleSize = options.outWidth / 720;
+            options.inPurgeable = true;
+            options.inInputShareable = true;
+            options.inPreferredConfig = Bitmap.Config.RGB_565;      //save memory
+
+            bitmap = BitmapFactory.decodeFile(path, options);
 
             DisplayMetrics dm = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -142,6 +148,16 @@ public class ShowActivity extends ActionBarActivity implements View.OnClickListe
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(!bitmap.isRecycled()) {
+            bitmap.recycle();
+            bitmap = null;
+            System.gc();
         }
     }
 }

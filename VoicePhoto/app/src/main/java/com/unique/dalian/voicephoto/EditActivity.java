@@ -78,7 +78,16 @@ public class EditActivity extends Activity implements View.OnTouchListener, View
         photoPath = cursor.getString(columnIndex);
         cursor.close();
 
-        bitmap = BitmapFactory.decodeFile(photoPath);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(photoPath, options);
+
+        options.inJustDecodeBounds = false;
+        options.inSampleSize = options.outWidth / 720;
+        options.inPurgeable = true;
+        options.inInputShareable = true;
+        options.inPreferredConfig = Bitmap.Config.RGB_565;      //save memory
+        bitmap = BitmapFactory.decodeFile(photoPath, options);
         photoView.setImageBitmap(bitmap);
         photoView.setLayoutParams(getLayoutParams(bitmap));
     }
@@ -174,13 +183,15 @@ public class EditActivity extends Activity implements View.OnTouchListener, View
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (bitmap != null) {
+        if (!bitmap.isRecycled()) {
             bitmap.recycle();
             bitmap = null;
+            System.gc();
         }
     }
 
     private RelativeLayout.LayoutParams getLayoutParams(Bitmap bitmap) {
+        /**
         float width, height;
         float rawWidth = bitmap.getWidth();
         float rawHeight = bitmap.getHeight();
@@ -212,9 +223,9 @@ public class EditActivity extends Activity implements View.OnTouchListener, View
                 height = rawHeight;
                 Log.e("scale", "4");
             }
-        }
+        } **/
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int) width, (int) height);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(bitmap.getWidth(), bitmap.getHeight());
         params.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
         params.addRule(RelativeLayout.BELOW, R.id.edit_iv_save);
         params.topMargin = 40;
