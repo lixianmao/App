@@ -10,24 +10,25 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import helper.Declare;
 import helper.JSONHelper;
-import helper.PointPos;
 import helper.TipHelper;
 
 
@@ -39,6 +40,8 @@ public class EditActivity extends Activity implements View.OnTouchListener, View
     private TipHelper tipHelper;
     private boolean isFirst;
     private String photoPath;
+    private Button editBtn, backBtn;
+    private RelativeLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +56,15 @@ public class EditActivity extends Activity implements View.OnTouchListener, View
         photoView = (ImageView) findViewById(R.id.edit_iv_photo);
         cancelView = (ImageView) findViewById(R.id.edit_iv_cancel);
         saveView = (ImageView) findViewById(R.id.edit_iv_save);
+        editBtn = (Button) findViewById(R.id.edit_modify);
+        backBtn = (Button) findViewById(R.id.edit_back);
+        layout = (RelativeLayout) findViewById(R.id.edit_parent);
 
         photoView.setOnTouchListener(this);
         cancelView.setOnClickListener(this);
         saveView.setOnClickListener(this);
+        editBtn.setOnClickListener(this);
+        backBtn.setOnClickListener(this);
 
         tipHelper = new TipHelper(this, (ViewGroup) findViewById(R.id.edit_parent));
         isFirst = tipHelper.getIsFirst();
@@ -64,7 +72,6 @@ public class EditActivity extends Activity implements View.OnTouchListener, View
             tipHelper.addTip();
 
         Declare.textList = new ArrayList<MyEditText>();
-        Declare.posList = new ArrayList<PointPos>();
     }
 
     private void showPhoto() {
@@ -97,6 +104,10 @@ public class EditActivity extends Activity implements View.OnTouchListener, View
         if (isEditAble) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
+                    Declare.lEdge = photoView.getLeft();
+                    Declare.tEdge = photoView.getTop();
+                    Declare.rEdge = photoView.getRight();
+                    Declare.bEdge = photoView.getBottom();
                     break;
                 case MotionEvent.ACTION_MOVE:
                     break;
@@ -114,12 +125,9 @@ public class EditActivity extends Activity implements View.OnTouchListener, View
                         float xPos = event.getX() / photoView.getWidth() * 100;
                         float yPos = event.getY() / photoView.getHeight() * 100;
 
-                        RelativeLayout layout = (RelativeLayout) findViewById(R.id.edit_parent);
                         RemarkPopupWindow popupWindow = new RemarkPopupWindow(this, layout, rawX, rawY, xPos, yPos);
                         popupWindow.showAtLocation(findViewById(R.id.edit_parent), Gravity.CENTER_HORIZONTAL, 0, 150);
-
                     }
-
                     break;
                 default:
                     break;
@@ -133,27 +141,7 @@ public class EditActivity extends Activity implements View.OnTouchListener, View
 
         switch (v.getId()) {
             case R.id.edit_iv_cancel:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Cancel");
-                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (!TextUtils.isEmpty(Declare.voicePath)) {
-                            File file = new File(Declare.voicePath);        //delete the audio file if it exists
-                            if (file.exists())
-                                file.delete();
-                        }
-                        dialog.dismiss();
-                        finish();
-                    }
-                });
-                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                builder.create().show();
+                dialogCancel();
                 break;
             case R.id.edit_iv_save:
                 if (Declare.type == Declare.TYPE_VOICE || Declare.type == Declare.TYPE_TEXT) {
@@ -162,7 +150,7 @@ public class EditActivity extends Activity implements View.OnTouchListener, View
                     if (null == array)
                         array = new JSONArray();
                     JSONObject object = null;
-                    if (Declare.type == Declare.TYPE_VOICE)
+                    if (Declare.type == Declare.TYPE_VOICE && Declare.playHelper != null)
                         object = jsonHelper.setVoiceObject(photoPath);
                     else
                         object = jsonHelper.setTextObject(photoPath);
@@ -172,6 +160,44 @@ public class EditActivity extends Activity implements View.OnTouchListener, View
                     Toast.makeText(getApplicationContext(), "Saving succeeded", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, "the photo has not been edited", Toast.LENGTH_SHORT).show();
+                }
+                Declare.type = 0;
+                Declare.playHelper = null;
+                Declare.textList = null;
+                finish();
+                break;
+            case R.id.edit_modify:
+                if (Declare.type == Declare.TYPE_TEXT) {
+                    if (editBtn.getText().equals("edit")) {
+                        for (final MyEditText editText : Declare.textList) {
+                            editText.setEnabled(true);
+                            editText.setImage();
+                        }
+                        editBtn.setText("done");
+                    } else {
+                        for (MyEditText editText : Declare.textList) {
+                            editText.setEnabled(false);
+                            editText.removeImage();
+                        }
+                        editBtn.setText("edit");
+                    }
+                } else {
+                    if (editBtn.getText().equals("edit")) {
+                        editBtn.setText("done");
+                        Declare.playHelper.setImage();
+                    } else {
+                        editBtn.setText("edit");
+                        if (Declare.playHelper != null)
+                            Declare.playHelper.removeImage();
+                    }
+                }
+
+                break;
+            case R.id.edit_back:
+                if (Declare.playHelper != null) {
+                    File file = new File(Declare.playHelper.path);
+                    if (file.exists())
+                        file.delete();
                 }
                 finish();
                 break;
@@ -188,42 +214,77 @@ public class EditActivity extends Activity implements View.OnTouchListener, View
             bitmap = null;
             System.gc();
         }
+        Declare.type = 0;
+        Declare.textList = null;
+        Declare.playHelper = null;
+    }
+
+    private void dialogCancel() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Cancel");
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (Declare.type == Declare.TYPE_VOICE && Declare.playHelper != null) {
+                    File file = new File(Declare.playHelper.path);        //delete the audio file if it exists
+                    if (file.exists())
+                        file.delete();
+                }
+                Declare.type = 0;
+                Declare.textList = null;
+                Declare.playHelper = null;
+                dialog.dismiss();
+                finish();
+            }
+        });
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        dialogCancel();
     }
 
     private RelativeLayout.LayoutParams getLayoutParams(Bitmap bitmap) {
         /**
-        float width, height;
-        float rawWidth = bitmap.getWidth();
-        float rawHeight = bitmap.getHeight();
+         float width, height;
+         float rawWidth = bitmap.getWidth();
+         float rawHeight = bitmap.getHeight();
 
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int maxWidth = dm.widthPixels;
-        int maxHeight = 954;        //from the beginning to the bottom
-        float rawScale = rawWidth / rawHeight;
-        float maxScale = ((float) maxWidth) / maxHeight;
+         DisplayMetrics dm = new DisplayMetrics();
+         getWindowManager().getDefaultDisplay().getMetrics(dm);
+         int maxWidth = dm.widthPixels;
+         int maxHeight = 954;        //from the beginning to the bottom
+         float rawScale = rawWidth / rawHeight;
+         float maxScale = ((float) maxWidth) / maxHeight;
 
-        if (rawScale > maxScale) {
-            if (rawWidth > maxWidth) {
-                width = maxWidth;
-                height = maxWidth / rawScale;
-                Log.e("scale", "1");
-            } else {
-                width = rawWidth;
-                height = rawHeight;
-                Log.e("scale", "2");
-            }
-        } else {
-            if (rawHeight > maxHeight) {
-                height = maxHeight;
-                width = rawScale * maxHeight;
-                Log.e("scale", "3");
-            } else {
-                width = rawWidth;
-                height = rawHeight;
-                Log.e("scale", "4");
-            }
-        } **/
+         if (rawScale > maxScale) {
+         if (rawWidth > maxWidth) {
+         width = maxWidth;
+         height = maxWidth / rawScale;
+         Log.e("scale", "1");
+         } else {
+         width = rawWidth;
+         height = rawHeight;
+         Log.e("scale", "2");
+         }
+         } else {
+         if (rawHeight > maxHeight) {
+         height = maxHeight;
+         width = rawScale * maxHeight;
+         Log.e("scale", "3");
+         } else {
+         width = rawWidth;
+         height = rawHeight;
+         Log.e("scale", "4");
+         }
+         } **/
 
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(bitmap.getWidth(), bitmap.getHeight());
         params.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);

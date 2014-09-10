@@ -4,6 +4,8 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.unique.dalian.voicephoto.MyEditText;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,9 +65,9 @@ public class JSONHelper {
             voiceObject.put(Declare.PHOTO_PATH, photoPath);
             voiceObject.put(Declare.TYPE, Declare.TYPE_VOICE);
             JSONObject content = new JSONObject();
-            content.put(Declare.VOICE_PATH, Declare.voicePath);
-            content.put(Declare.X, Declare.posList.get(0).xPos);
-            content.put(Declare.Y, Declare.posList.get(0).yPos);
+            content.put(Declare.VOICE_PATH, Declare.playHelper.path);
+            content.put(Declare.X, Declare.playHelper.xPos);
+            content.put(Declare.Y, Declare.playHelper.yPos);
             voiceObject.put(Declare.CONTENT, content);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -79,11 +81,11 @@ public class JSONHelper {
             textObject.put(Declare.PHOTO_PATH, photoPath);
             textObject.put(Declare.TYPE, Declare.TYPE_TEXT);
             JSONArray array = new JSONArray();
-            for (int i = 0; i < Declare.posList.size(); i++) {
+            for (MyEditText editText : Declare.textList) {
                 JSONObject content = new JSONObject();
-                content.put(Declare.TEXT, Declare.textList.get(i).getMyText());
-                content.put(Declare.X, Declare.posList.get(i).xPos);
-                content.put(Declare.Y, Declare.posList.get(i).yPos);
+                content.put(Declare.TEXT, editText.getMyText());
+                content.put(Declare.X, editText.xPos);
+                content.put(Declare.Y, editText.yPos);
                 array.put(content);
             }
             textObject.put(Declare.CONTENT, array);

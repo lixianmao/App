@@ -29,6 +29,31 @@
         android:layout_below="@id/edit_iv_save"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"/>
+    
+    <Button
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:id="@+id/edit_back"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="30dp"
+        android:text="home"/>
+
+    <Button
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:id="@+id/edit_modify"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="edit"/>
+
+    <Button
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:id="@+id/edit_share"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        android:text="share"/>
 
 
 </RelativeLayout>

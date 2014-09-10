@@ -105,7 +105,7 @@ public class GridAdapter extends BaseAdapter {
         for (int i = firstVisibleItem; i < firstVisibleItem + visibleItemCount; i++) {
             ImageView imageView = (ImageView) gridView.findViewById(i);
             String tag = (String) imageView.getTag();
-            if (tag != null && tag.equals("null")) {
+            if (tag != null && tag.equals("no")) {
                 String path = pathArray[i];
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inJustDecodeBounds = true;

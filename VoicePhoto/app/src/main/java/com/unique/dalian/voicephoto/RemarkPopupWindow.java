@@ -8,11 +8,6 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
-import com.unique.dalian.voicephoto.MyEditText;
-import helper.PointPos;
-import com.unique.dalian.voicephoto.R;
-import com.unique.dalian.voicephoto.RecordHelper;
-
 import helper.Declare;
 
 /**
@@ -72,9 +67,10 @@ public class RemarkPopupWindow extends PopupWindow implements View.OnClickListen
                 layout.addView(recordHelper, param);
                 break;
             case R.id.popup_add_text:
-                MyEditText text = new MyEditText(context);
+                MyEditText text = new MyEditText(context, layout);
                 text.setBackgroundResource(R.drawable.bg_edittext);
                 text.setText("hello_world");
+                text.setPos(xPos, yPos);
 
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
                         RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -83,7 +79,6 @@ public class RemarkPopupWindow extends PopupWindow implements View.OnClickListen
 
                 Declare.type = Declare.TYPE_TEXT;
                 Declare.textList.add(text);
-                Declare.posList.add(new PointPos(xPos, yPos));
                 break;
             default:
                 break;

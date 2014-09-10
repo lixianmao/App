@@ -13,12 +13,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import helper.PointPos;
-
-import com.unique.dalian.voicephoto.PlayHelper;
-import com.unique.dalian.voicephoto.R;
-
 import helper.RecordEngine;
 import helper.Declare;
 
@@ -90,15 +84,14 @@ public class RecordHelper extends RelativeLayout {
                     dismiss();
 
                     Declare.type = Declare.TYPE_VOICE;
-                    Declare.posList.add(new PointPos(xPos, yPos));
                     String voicePath = recorder.getPath();
-                    Declare.voicePath = voicePath;
 
-                    PlayHelper playHelper = new PlayHelper(context, voicePath);
+                    Declare.playHelper = new PlayHelper(context, voicePath, layout);
+                    Declare.playHelper.setPos(xPos, yPos);
                     RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
                             RelativeLayout.LayoutParams.WRAP_CONTENT);
                     params.setMargins(x, y, 0, 0);
-                    layout.addView(playHelper, params);
+                    layout.addView(Declare.playHelper, params);
                     break;
                 case R.id.record_delete:
                     isRecording = false;

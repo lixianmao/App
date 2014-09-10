@@ -46,13 +46,6 @@ public class SeeActivity extends Activity {
             }
         };
         new BitmapTask().execute();
-
-        gridView.setRecyclerListener(new AbsListView.RecyclerListener() {
-            @Override
-            public void onMovedToScrapHeap(View view) {
-
-            }
-        });
         gridView.setOnItemClickListener(new MyOnItemClickListener());
     }
 
