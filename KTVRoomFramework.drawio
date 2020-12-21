@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-12-21T13:18:38.542Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="HnS_xn5vH9OgYbk-7zQ3" version="13.10.2" type="github">
+<mxfile host="app.diagrams.net" modified="2020-12-21T13:22:28.697Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="t7WRqUSIkJIKfWUERrac" version="13.10.2" type="github">
   <diagram id="RX8tZE7j9Tt-qlyoLgVX" name="Page-1">
     <mxGraphModel dx="1721" dy="1003" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="4681" math="0" shadow="0">
       <root>
@@ -304,7 +304,7 @@
         <mxCell id="LNAnqtrbUqoBeL77SgQ4-10" value="Gift" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="790" y="1850" width="90" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="LNAnqtrbUqoBeL77SgQ4-11" value="SingleKtvMicQueueManager" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-11" value="SingleKtvMicQueueManager" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b0e3e6;strokeColor=#0e8088;" vertex="1" parent="1">
           <mxGeometry x="940" y="1810" width="170" height="40" as="geometry" />
         </mxCell>
         <mxCell id="LNAnqtrbUqoBeL77SgQ4-12" value="SingManager" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
