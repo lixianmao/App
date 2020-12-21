@@ -1,9 +1,15 @@
-<mxfile host="app.diagrams.net" modified="2020-12-20T14:14:12.418Z" agent="5.0 (Macintosh; Intel Mac OS X 11_0_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="JxN4sfchMKJF9o69GCD_" version="14.1.1" type="github">
+<mxfile host="app.diagrams.net" modified="2020-12-21T13:18:38.542Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="HnS_xn5vH9OgYbk-7zQ3" version="13.10.2" type="github">
   <diagram id="RX8tZE7j9Tt-qlyoLgVX" name="Page-1">
-    <mxGraphModel dx="946" dy="518" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="4681" math="0" shadow="0">
+    <mxGraphModel dx="1721" dy="1003" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="4681" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-29" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="930" y="1800" width="640" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-23" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="950" y="1890" width="855" height="120" as="geometry" />
+        </mxCell>
         <mxCell id="dRoRpwYoGaoy_X5UFxtA-8" value="RoomManager" style="html=1;" parent="1" vertex="1">
           <mxGeometry x="1620" y="610" width="110" height="50" as="geometry" />
         </mxCell>
@@ -259,14 +265,92 @@
         <mxCell id="YZkKuV9QOpAfeZF1AWrd-19" value="点歌" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="970" y="1330" width="100" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="-WgHUGJGcXcpyEQhcgl2-1" value="KSAVBaseVideoView" style="html=1;" vertex="1" parent="1">
+        <mxCell id="-WgHUGJGcXcpyEQhcgl2-1" value="KSAVBaseVideoView" style="html=1;" parent="1" vertex="1">
           <mxGeometry x="1220" y="820" width="110" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="-WgHUGJGcXcpyEQhcgl2-2" value="" style="endArrow=open;endFill=1;endSize=12;html=1;exitX=0.511;exitY=1.06;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="dRoRpwYoGaoy_X5UFxtA-31" target="-WgHUGJGcXcpyEQhcgl2-1">
+        <mxCell id="-WgHUGJGcXcpyEQhcgl2-2" value="" style="endArrow=open;endFill=1;endSize=12;html=1;exitX=0.511;exitY=1.06;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="dRoRpwYoGaoy_X5UFxtA-31" target="-WgHUGJGcXcpyEQhcgl2-1" edge="1">
           <mxGeometry width="160" relative="1" as="geometry">
             <mxPoint x="1275" y="520" as="sourcePoint" />
             <mxPoint x="1274.5" y="810" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-1" value="SingleKtvInteractor" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="940" y="1730" width="600" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-2" value="MultiKtvInteractor" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="1580" y="1730" width="240" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-3" value="KtvInteractor" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="640" y="1650" width="1180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-4" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="640" y="1720" width="270" height="290" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-5" value="RoomInfoManager" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="1735" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-6" value="MicQueueManager" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="790" y="1735" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-7" value="IM" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="1850" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-8" value="HeartBeat" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="790" y="1790" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-9" value="Rank" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="1910" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-10" value="Gift" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="790" y="1850" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-11" value="SingleKtvMicQueueManager" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="940" y="1810" width="170" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-12" value="SingManager" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1315" y="1900" width="320" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-13" value="KTVAudioManager" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="965" y="1900" width="330" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-14" value="SingleKtvAudioPlugin" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="1810" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-16" value="KSongKit" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="965" y="1950" width="130" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-17" value="AVBaseAudio" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1175" y="1950" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-18" value="AVRoomManager" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="1790" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-19" value="Lyric" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1315" y="1950" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-20" value="MIDI" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1400" y="1950" width="65" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-21" value="MV" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1482.5" y="1950" width="65" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-22" value="AccDwld" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1570" y="1950" width="65" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-24" value="AVBaseVideoView" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1675" y="1900" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-25" value="IM" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1295" y="1810" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-26" value="MicInfo" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1385" y="1810" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-27" value="GameInfo" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1470" y="1810" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="LNAnqtrbUqoBeL77SgQ4-28" value="KtvRoomVC" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="640" y="1570" width="1180" height="50" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
